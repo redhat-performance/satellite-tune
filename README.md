@@ -11,6 +11,7 @@ Ideally, you need two hosts to run this project:
 2. Destination node - This must be one of the following:
     - A Satellite server
     - Capsule servers
+
 **Note**
 
 1. You can get away with using one host by optionally choosing to use `Destination node` as the `Control node`.
