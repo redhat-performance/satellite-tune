@@ -1,0 +1,32 @@
+---
+# Configure on RHEL7
+- name: "RHEL7 httpd service directory created"
+  file:
+    path=/etc/systemd/system/qdrouterd.service.d
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+- name: "RHEL7 qdrouterd limits.conf uploaded"
+  copy:
+    src=limits-qdrouterd.conf
+    dest=/etc/systemd/system/qdrouterd.service.d/limits.conf
+    owner=root
+    group=root
+    mode=0644
+  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+- name: "RHEL7 qdrouterd service directory have correct SELinux context"
+  command:
+    restorecon -vR /etc/systemd/system/qdrouterd.service.d
+  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+- name: "RHEL7 SystemD reloaded"
+  command:
+    systemctl daemon-reload
+  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+
+# Restart Satellite/Capsule
+- name: "Services restarted"
+  command:
+    katello-service restart
+...
