@@ -2,7 +2,9 @@
 Satellite-tune contains simple Ansible playbooks that can be used to perform any of the following tasks:
 * Tune Satellite 6.1 or 6.2 for performance 
 * Tune Satellite 6.1 or 6.2 for scale
-
+##Reference performance brief Article: 
+* satellite 6.1: https://access.redhat.com/articles/2356131
+* satellite 6.2: https://access.redhat.com/articles/2626101
 
 ## Getting Started
 Ideally, you need two hosts to run this project:
