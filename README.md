@@ -42,7 +42,7 @@ Ideally, you need two hosts to run this project:
 
 Now you can proceed to any of the following tasks:
 
- * [Tune a Satellite serverfor performance](docs/satellite-perf-tune.md)
+ * [Tune a Satellite server for performance](docs/satellite-perf-tune.md)
  * [Tune a Satellite server for scale](docs/satellite-scale-tune.md)
 
 Please check our [FAQ section](docs/faqs.md) for frequently asked questions
