@@ -1,0 +1,42 @@
+---
+# Configure on RHEL6
+- name: "RHEL6 httpd limits.conf uploaded"
+  copy:
+    src=limits-el6.conf
+    dest=/etc/security/limits.d/99-httpd-nofile.conf
+    owner=root
+    group=root
+    mode=0644
+  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '6'"
+
+# Configure on RHEL7
+- name: "RHEL7 httpd service directory created"
+  file:
+    path=/etc/systemd/system/httpd.service.d
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+- name: "RHEL7 httpd limits.conf uploaded"
+  copy:
+    src=limits-el7.conf
+    dest=/etc/systemd/system/httpd.service.d/limits.conf
+    owner=root
+    group=root
+    mode=0644
+  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+- name: "RHEL7 httpd service directory have correct SELinux context"
+  command:
+    restorecon -vR /etc/systemd/system/httpd.service.d
+  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+- name: "RHEL7 SystemD reloaded"
+  command:
+    systemctl daemon-reload
+  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+
+# Restart Satellite/Capsule
+- name: "Services restarted"
+  command:
+    katello-service restart
+...

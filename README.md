@@ -39,7 +39,7 @@ Ideally, you need two hosts to run this project:
 3. Create an inventory file named `inventory` (by copying `ansible/inventory.sample`) and update it as necessary:
 
   ```console
-    # cp ansible/inventory.sample ansible/inventory
+    # cp inventory.sample inventory
   ```
 
 Now you can proceed to any of the following tasks:

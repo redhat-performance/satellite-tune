@@ -1,0 +1,18 @@
+---
+# Configure on RHEL7
+- name: "Tune passenger foreman Globally"
+  blockinfile:
+    dest: /etc/httpd/conf.d/05-foreman-ssl.conf
+    block: |
+      PassengerMinInstances 6
+      PassengerStartTimeout 90
+      PassengerMaxRequestQueueSize 400
+      PassengerStatThrottleRate 120    
+    insertafter: PassengerRuby
+  notify: bounce httpd softly 
+   
+# Restart Satellite/Capsule
+- name: "Services restarted"
+  command:
+    katello-service restart
+...
