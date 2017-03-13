@@ -8,9 +8,4 @@
       regexp: "^max_connections"
       state: present
     #when: "ansible_distribution == 'RedHat' and {{ ansible_distribution_version | version_compare('7.0', '>=') }} == 'true'"
-  
-  #Restart Katello service for the changes to take effect
-  - name: "Restart Services"
-    command:
-      katello-service restart
 ...

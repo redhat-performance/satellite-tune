@@ -8,8 +8,4 @@
       regexp: "^work_mem"
       state: present
     #when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
-
-  - name: "Restart satellite for changes to take effect"
-    command:
-      katello-service restart
 ...
