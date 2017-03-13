@@ -3,4 +3,6 @@
   remote_user: root
   roles:
     - pgsql-max-connections
-    - pgsql-shared-buffers 
+    - pgsql-shared-buffers
+    - pgsql-work-mem
+    - common 
