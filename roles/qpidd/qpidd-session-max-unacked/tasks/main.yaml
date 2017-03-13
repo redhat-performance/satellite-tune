@@ -7,7 +7,7 @@
       session-max-unacked=100    
     insertafter: ssl-cert-name
   notify: bounce qpidd  
-# Restart Satellite/Capsule
+# Restart katello services on Satellite/Capsule
 - name: "Services restarted"
   command:
     katello-service restart
