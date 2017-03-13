@@ -1,0 +1,10 @@
+---
+  #Setup postgres shared_buffers
+  - name: "Set postgresql shared_buffers"
+    lineinfile:
+      dest: /var/lib/pgsql/data/postgresql.conf
+      line: shared_buffers = 512MB
+      regexp: "^shared_buffers"
+      state: present
+    #when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+...

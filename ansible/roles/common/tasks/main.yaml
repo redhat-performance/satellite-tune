@@ -1,0 +1,6 @@
+---
+  #Restart Satellite for the changes to take effect
+  - name: "Restarting satellite for changes to take effect"
+    command:
+      katello-service restart
+...

@@ -1,0 +1,11 @@
+---
+  #Setup work_mem for postgres
+  #TODO: Add support for running on specific distributions only
+  - name: "Set postgresql work_mem"
+    lineinfile:
+      dest: /var/lib/pgsql/data/postgresql.conf
+      line: work_mem = 4MB
+      regexp: "^work_mem"
+      state: present
+    #when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+...
