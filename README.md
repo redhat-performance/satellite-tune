@@ -8,7 +8,7 @@ Satellite-tune contains simple Ansible playbooks that can be used to perform any
 ## Getting Started
 Ideally, you need two hosts to run this project:
 
-1. Ansible Control node (referred to as `Control node` in the rest of this document) is the host from which this ansible project is run.
+1. Ansible Control node (referred to as `Control node` in the rest of this document) is the host from which satellite-tune ansible playbooks are run.
 2. Destination node - This must be one of the following:
     - A Satellite server
     - Capsule servers
@@ -43,7 +43,7 @@ Ideally, you need two hosts to run this project:
 
 Now you can proceed to any of the following tasks:
 
- * [Tune a Satellite server for performance & scale](docs/satellite-perf-tune.md)
- * [Tune a Capsule server for performance & scale](docs/satellite-scale-tune.md)
+ * [Tune a Satellite server for performance & scale](docs/satellite-tune.md)
+ * [Tune a Capsule server for performance & scale](docs/capsule-tune.md)
 
 Please check our [FAQ section](docs/faqs.md) for frequently asked questions
