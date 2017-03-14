@@ -1,0 +1,6 @@
+---
+- hosts: capsules
+  remote_user: root
+  roles:
+    - smart_proxy_dynflow_core-change-sqlite-storage
+    - common
