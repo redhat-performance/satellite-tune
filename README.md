@@ -1,7 +1,6 @@
 # Satellite-tune
 Satellite-tune contains simple Ansible playbooks that can be used to perform any of the following tasks:
-* Tune Satellite 6.1 or 6.2 for performance 
-* Tune Satellite 6.1 or 6.2 for scale
+* Tune Satellite 6.1 or 6.2 for performance & scale
 ##Reference performance brief Article: 
 * satellite 6.1: https://access.redhat.com/articles/2356131
 * satellite 6.2: https://access.redhat.com/articles/2626101
@@ -39,12 +38,12 @@ Ideally, you need two hosts to run this project:
 3. Create an inventory file named `inventory` (by copying `ansible/inventory.sample`) and update it as necessary:
 
   ```console
-    # cp inventory.sample inventory
+    # cp conf/hosts.ini.sample conf/hosts.ini
   ```
 
 Now you can proceed to any of the following tasks:
 
- * [Tune a Satellite server for performance](docs/satellite-perf-tune.md)
- * [Tune a Satellite server for scale](docs/satellite-scale-tune.md)
+ * [Tune a Satellite server for performance & scale](docs/satellite-perf-tune.md)
+ * [Tune a Capsule server for performance & scale](docs/satellite-scale-tune.md)
 
 Please check our [FAQ section](docs/faqs.md) for frequently asked questions

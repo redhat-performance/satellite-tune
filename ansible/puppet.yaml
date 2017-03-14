@@ -2,5 +2,5 @@
 - hosts: all
   remote_user: root
   roles:
-    - passenger_puppet
+    - passenger-puppet
     - common

@@ -3,5 +3,5 @@
   remote_user: root
   roles:
     - passenger
-    - passenger_foreman
+    - passenger-foreman
     - common

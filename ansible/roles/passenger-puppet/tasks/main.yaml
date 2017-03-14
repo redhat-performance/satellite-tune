@@ -6,9 +6,9 @@
     insertafter: SSLOptions
     marker: "   #{mark} ANSIBLE MANAGED BLOCK"
     block: |4
-      PassengerMinInstances 6
-      PassengerStartTimeout 500
-      PassengerMaxPreloaderIdleTime 0
-      PassengerMaxRequests 10000
-      PassengerPreStart https://satellite6.example.com:8140 
+           PassengerMinInstances 6
+           PassengerStartTimeout 500
+           PassengerMaxPreloaderIdleTime 0
+           PassengerMaxRequests 10000
+           PassengerPreStart https://satellite6.example.com:8140 
 ...

@@ -3,10 +3,13 @@
 - name: "Tune passenger foreman Globally"
   blockinfile:
     dest: /etc/httpd/conf.d/05-foreman-ssl.conf
-    insertafter: PassengerRuby
-    block: |
-      PassengerMinInstances 6
-      PassengerStartTimeout 500
-      PassengerMaxRequestQueueSize 400
-      PassengerStatThrottleRate 120    
+    insertafter: PassengerStartTimeout
+    marker: "   #{mark} ANSIBLE MANAGED BLOCK"
+    block: |4
+           PassengerMaxRequestQueueSize 400
+           PassengerStatThrottleRate 120   
+  lineinfile:
+     dest: /etc/httpd/conf.d/05-foreman-ssl.conf
+     regexp: "PassengerMinInstances"
+     line: '  PassengerMinInstances 6'
 ...
