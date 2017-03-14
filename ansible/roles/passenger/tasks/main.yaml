@@ -4,8 +4,9 @@
   blockinfile:
     dest: /etc/httpd/conf.d/passenger.conf
     insertafter: PassengerRuby
-    block: |
-      PassengerMaxPoolSize 48
-      PassengerMaxRequestQueueSize 400
-      PassengerStatThrottleRate 120    
+    marker: "   #{mark} ANSIBLE MANAGED BLOCK"
+    block: |4
+           PassengerMaxPoolSize 48
+           PassengerMaxRequestQueueSize 400
+           PassengerStatThrottleRate 120    
 ...
