@@ -1,0 +1,9 @@
+---
+# Tune qpid memory
+   - name: "Tune qpid session-max-unacked to reduce qpid memory consumption"
+     lineinfile:
+       dest: /etc/qpid/qpidd.conf
+       line: session-max-unacked=100
+       regexp: "^session-max-unacked"
+       state: present
+...
