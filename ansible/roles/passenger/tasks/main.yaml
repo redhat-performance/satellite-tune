@@ -3,14 +3,9 @@
 - name: "Tune passenger Globally"
   blockinfile:
     dest: /etc/httpd/conf.d/passenger.conf
+    insertafter: PassengerRuby
     block: |
       PassengerMaxPoolSize 48
       PassengerMaxRequestQueueSize 400
       PassengerStatThrottleRate 120    
-    insertafter: PassengerRuby
-  notify: bounce httpd softly    
-# Restart Satellite/Capsule
-- name: "Services restarted"
-  command:
-    katello-service restart
 ...
