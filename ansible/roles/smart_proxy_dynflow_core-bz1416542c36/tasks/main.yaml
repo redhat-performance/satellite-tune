@@ -1,0 +1,28 @@
+---
+# https://bugzilla.redhat.com/show_bug.cgi?id=1416542#c36
+# TODO: Autodetect path based on installed gem version
+- name: "Deploy patch"
+  copy:
+   src: 0001-more-effective-ticking.patch
+   dest: /opt/theforeman/tfm/root/usr/share/gems/gems/smart_proxy_remote_execution_ssh_core-0.1.2.3/
+- name: "Git is installed"
+  yum:
+    name: git
+    state: present
+- name: "Initiate git for patched path"
+  shell: |
+    cd /opt/theforeman/tfm/root/usr/share/gems/gems/smart_proxy_remote_execution_ssh_core-0.1.2.3/
+    git init
+    git add -A .
+    git commit -m origin
+  args:
+    creates: /opt/theforeman/tfm/root/usr/share/gems/gems/smart_proxy_remote_execution_ssh_core-0.1.2.3/.git
+- name: "Patch source"
+  shell: |
+    cd /opt/theforeman/tfm/root/usr/share/gems/gems/smart_proxy_remote_execution_ssh_core-0.1.2.3/
+    patch -p1 < 0001-more-effective-ticking.patch
+- name: "Restart service"
+  service:
+    name: smart_proxy_dynflow_core
+    state: restarted
+...

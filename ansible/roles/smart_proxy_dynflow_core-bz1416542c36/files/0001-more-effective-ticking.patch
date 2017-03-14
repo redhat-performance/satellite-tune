@@ -1,0 +1,119 @@
+From c65e1e7e82ecc3abb93362f1f009208b25c9a001 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ivan=20Ne=C4=8Das?= <inecas@redhat.com>
+Date: Tue, 7 Feb 2017 22:57:05 +0100
+Subject: [PATCH] more effective ticking
+
+---
+ lib/smart_proxy_remote_execution_ssh_core.rb       |  1 +
+ .../dispatcher.rb                                  |  4 +-
+ .../session.rb                                     |  4 +-
+ .../ticker.rb                                      | 47 ++++++++++++++++++++++
+ 4 files changed, 52 insertions(+), 4 deletions(-)
+ create mode 100644 lib/smart_proxy_remote_execution_ssh_core/ticker.rb
+
+diff --git a/lib/smart_proxy_remote_execution_ssh_core.rb b/lib/smart_proxy_remote_execution_ssh_core.rb
+index ba46049..fbe0fe7 100644
+--- a/lib/smart_proxy_remote_execution_ssh_core.rb
++++ b/lib/smart_proxy_remote_execution_ssh_core.rb
+@@ -4,6 +4,7 @@ require 'smart_proxy_dynflow_core'
+ require 'smart_proxy_remote_execution_ssh_core/command_action'
+ require 'smart_proxy_remote_execution_ssh_core/command_update'
+ require 'smart_proxy_remote_execution_ssh_core/connector'
++require 'smart_proxy_remote_execution_ssh_core/ticker'
+ require 'smart_proxy_remote_execution_ssh_core/dispatcher'
+ require 'smart_proxy_remote_execution_ssh_core/session'
+ 
+diff --git a/lib/smart_proxy_remote_execution_ssh_core/dispatcher.rb b/lib/smart_proxy_remote_execution_ssh_core/dispatcher.rb
+index f9a2323..c2afe17 100644
+--- a/lib/smart_proxy_remote_execution_ssh_core/dispatcher.rb
++++ b/lib/smart_proxy_remote_execution_ssh_core/dispatcher.rb
+@@ -34,9 +34,9 @@ module Proxy
+         def initialize(options = {})
+           @clock                   = options[:clock] || Dynflow::Clock.spawn('proxy-dispatcher-clock')
+           @logger                  = options[:logger] || Logger.new($stderr)
+-
++          @ticker                  = Ticker.spawn("dispatcher-ticker", @clock, @logger)
+           @session_args = { :logger => @logger,
+-                            :clock => @clock,
++                            :ticker => @ticker,
+                             :connector_class => options[:connector_class] || Connector,
+                             :local_working_dir => options[:local_working_dir] || Settings.instance.local_working_dir,
+                             :remote_working_dir => options[:remote_working_dir] || Settings.instance.remote_working_dir,
+diff --git a/lib/smart_proxy_remote_execution_ssh_core/session.rb b/lib/smart_proxy_remote_execution_ssh_core/session.rb
+index daf7d20..a49b122 100644
+--- a/lib/smart_proxy_remote_execution_ssh_core/session.rb
++++ b/lib/smart_proxy_remote_execution_ssh_core/session.rb
+@@ -8,7 +8,7 @@ module Proxy
+         EXPECTED_POWER_ACTION_MESSAGES = ["restart host", "shutdown host"]
+ 
+         def initialize(options = {})
+-          @clock = options[:clock] || Dynflow::Clock.spawn('proxy-dispatcher-clock')
++          @ticker = options[:ticker]
+           @logger = options[:logger] || Logger.new($stderr)
+           @connector_class = options[:connector_class] || Connector
+           @local_working_dir = options[:local_working_dir] || Settings.instance.local_working_dir
+@@ -194,7 +194,7 @@ module Proxy
+         def plan_next_refresh
+           if @connector && !@refresh_planned
+             @logger.debug("planning to refresh")
+-            @clock.ping(reference, Time.now + @refresh_interval, :refresh)
++            @ticker.tell([:add_event, reference, :refresh])
+             @refresh_planned = true
+           end
+         end
+diff --git a/lib/smart_proxy_remote_execution_ssh_core/ticker.rb b/lib/smart_proxy_remote_execution_ssh_core/ticker.rb
+new file mode 100644
+index 0000000..8f1c1b7
+--- /dev/null
++++ b/lib/smart_proxy_remote_execution_ssh_core/ticker.rb
+@@ -0,0 +1,47 @@
++module Proxy
++  module RemoteExecution
++    module Ssh
++      class Ticker < ::Dynflow::Actor
++        def initialize(clock, logger)
++          @clock = clock
++          @logger = logger
++          @events = []
++          @refresh_interval = 1
++          plan_next_tick
++        end
++
++        def tick
++          @logger.debug("Ticker ticking for #{@events.size} events")
++          @events.each do |(target, args)|
++            pass_event(target, args)
++          end
++          @events = []
++        ensure
++          @planned = false
++          plan_next_tick
++        end
++
++        def add_event(target, args)
++          @events << [target, args]
++          plan_next_tick
++        end
++
++        private
++
++        def pass_event(target, args)
++          target.tell(args)
++        rescue => e
++          @logger.error("Failed passing event to #{target} with #{args}")
++          @logger.error(e)
++        end
++
++        def plan_next_tick
++          if !@planned && !@events.empty?
++            @clock.ping(reference, Time.now.getlocal + @refresh_interval, :tick)
++            @planned = true
++          end
++        end
++      end
++    end
++  end
++end
+-- 
+2.7.4
+

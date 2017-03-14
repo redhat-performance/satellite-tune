@@ -3,4 +3,5 @@
   remote_user: root
   roles:
     - smart_proxy_dynflow_core-change-sqlite-storage
+    #- smart_proxy_dynflow_core-bz1416542c36
     - common
