@@ -1,4 +1,10 @@
 ---
+# Configure on RHEL6
+- name: "RHEL6 qpidd limits.conf uploaded"
+  assert:
+    that: false
+    msg: "Not yet implemented"
+  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '6'"
 # Configure on RHEL7
 - name: "RHEL7 httpd service directory created"
   file:
