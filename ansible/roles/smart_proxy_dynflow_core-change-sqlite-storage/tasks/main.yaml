@@ -1,8 +1,8 @@
 ---
-  #Switching the sqlite to use the in-memory storage
-  - name: "Switching the sqlite to use the in-memory storage"
+  # Use in-memory storage instead of sqlite database
+  - name: "Use in-memory storage instead of sqlite database"
     lineinfile:
       dest: /etc/smart_proxy_dynflow_core/settings.yml
-      regexp: ":database"
+      regexp: ":database:"
       line: ':database: ""'
 ...
