@@ -4,7 +4,8 @@
   assert:
     that: false
     msg: "Not yet implemented"
-  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '6'"
+  when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '6'"
+
 # Configure on RHEL7
 - name: "RHEL7 httpd service directory created"
   file:
@@ -13,7 +14,7 @@
     owner=root
     group=root
     mode=0755
-  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+  when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '7'"
 - name: "RHEL7 qpidd limits.conf uploaded"
   copy:
     src=limits-qpidd.conf
@@ -21,15 +22,15 @@
     owner=root
     group=root
     mode=0644
-  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+  when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '7'"
 - name: "RHEL7 qpidd service directory have correct SELinux context"
   command:
     restorecon -vR /etc/systemd/system/qpidd.service.d
-  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+  when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '7'"
 - name: "RHEL7 SystemD reloaded"
   command:
     systemctl daemon-reload
-  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+  when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '7'"
 
 # Restart Satellite/Capsule
 - name: "Services restarted"

@@ -1,4 +1,11 @@
 ---
+# Configure on RHEL6
+- name: "RHEL6 qpidd limits.conf uploaded"
+  assert:
+    that: false
+    msg: "Not yet implemented"
+  when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '6'"
+
 # Configure on RHEL7
 - name: "RHEL7 httpd service directory created"
   file:
@@ -7,7 +14,7 @@
     owner=root
     group=root
     mode=0755
-  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+  when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '7'"
 - name: "RHEL7 smart_proxy_dynflow_core limits.conf uploaded"
   copy:
     src=limits-smart_proxy_dynflow_core.conf
@@ -15,15 +22,15 @@
     owner=root
     group=root
     mode=0644
-  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+  when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '7'"
 - name: "RHEL7 smart_proxy_dynflow_core service directory have correct SELinux context"
   command:
     restorecon -vR /etc/systemd/system/smart_proxy_dynflow_core.service.d
-  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+  when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '7'"
 - name: "RHEL7 SystemD reloaded"
   command:
     systemctl daemon-reload
-  when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
+  when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '7'"
 
 # Restart Satellite/Capsule
 - name: "Services restarted"
