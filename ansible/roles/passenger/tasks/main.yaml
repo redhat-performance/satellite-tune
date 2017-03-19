@@ -6,7 +6,7 @@
     insertafter: PassengerRuby
     marker: "   #{mark} ANSIBLE MANAGED BLOCK"
     block: |4
-           PassengerMaxPoolSize 48
+           PassengerMaxPoolSize {{ ( ansible_processor_vcpus * 1.5 )|round|int }}
            PassengerMaxRequestQueueSize 400
            PassengerStatThrottleRate 120    
 ...
