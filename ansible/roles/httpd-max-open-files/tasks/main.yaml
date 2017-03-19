@@ -2,7 +2,7 @@
 # Configure on RHEL6
 - name: "RHEL6 httpd limits.conf uploaded"
   copy:
-    src=../files/limits-el6.conf
+    src=limits-el6.conf
     dest=/etc/security/limits.d/99-httpd-nofile.conf
     owner=root
     group=root
@@ -20,7 +20,7 @@
   when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '7'"
 - name: "RHEL7 httpd limits.conf uploaded"
   copy:
-    src=../files/limits-el7.conf
+    src=limits-el7.conf
     dest=/etc/systemd/system/httpd.service.d/limits.conf
     owner=root
     group=root
