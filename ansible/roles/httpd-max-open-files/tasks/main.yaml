@@ -34,9 +34,4 @@
   command:
     systemctl daemon-reload
   when: "ansible_distribution == 'RedHat' and ansible_distribution_major_version == '7'"
-
-# Restart Satellite/Capsule
-- name: "Services restarted"
-  command:
-    katello-service restart
 ...
