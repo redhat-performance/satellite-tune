@@ -8,6 +8,7 @@
     block: |4
            PassengerMaxRequestQueueSize 400
            PassengerStatThrottleRate 120   
+- name: "Configure Passenger MinInstances"  
   lineinfile:
      dest: /etc/httpd/conf.d/05-foreman-ssl.conf
      regexp: "PassengerMinInstances"
