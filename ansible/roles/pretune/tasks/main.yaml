@@ -1,0 +1,23 @@
+---
+  #We need to backup data before performing tunings
+  #Check is a backup is already there or not
+  - name: "Check is there is some previous backup"
+    stat: 
+      path: /root/tune-backup
+    register: backup_found
+  #Create a backup location if no backup is there
+  - name: "Create a backup location if no backup dir was found"
+    file:
+      path: /root/tune-backup
+      state: directory
+    when: backup_found.exists == False or backup_found is not defined
+  #Backup configuration before applying tunings
+  - name: "Backup configuration before applying tunings"
+    command:
+      cp -r "{{ item }}" "/root/tune-backup"
+    with_items:
+      - "/etc/httpd/conf"
+      - "/etc/httpd/conf.d"
+      - "/etc/httpd/conf.modules.d"
+      - "/etc/puppet"
+...
