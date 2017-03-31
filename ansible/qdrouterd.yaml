@@ -1,5 +1,5 @@
 ---
-- hosts: satellite6
+- hosts: all
   remote_user: root
   roles:
     - qdrouterd-max-open-files
