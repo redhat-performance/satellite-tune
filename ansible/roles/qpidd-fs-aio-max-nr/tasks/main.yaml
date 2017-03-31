@@ -1,0 +1,9 @@
+---
+  - name: "Configure larger maximal number of allowable concurrent AIO requests"
+    copy:
+      src: 50-qpidd.conf
+      dest: /etc/sysctl.d/50-qpidd.conf
+  - name: "Reload sysctl config"
+    command:
+      sysctl -p /etc/sysctl.d/50-qpidd.conf
+...
