@@ -1,0 +1,27 @@
+---
+  - name: "Determine DynFlow version"
+    command:
+      rpm -q --qf "%{VERSION}" tfm-rubygem-dynflow
+    always_run: yes
+    register: dynflow_version
+  #- name: "Increase DynFlow's pool_size attribute"
+  #  blockinfile:
+  #    dest: "/opt/theforeman/tfm/root/usr/share/gems/gems/dynflow-{{ dynflow_version.stdout_lines|first }}/lib/dynflow/config.rb"
+  #    backup: yes
+  #    insertafter: "^    config_attr :pool_size, Fixnum do$"
+  #    content: |
+  #      20
+  #- name: "Increase DynFlow's pool_size attribute"
+  #  replace:
+  #    dest: "/opt/theforeman/tfm/root/usr/share/gems/gems/dynflow-{{ dynflow_version.stdout_lines|first }}/lib/dynflow/config.rb"
+  #    backup: yes
+  #    after: "^    config_attr :pool_size, Fixnum do$"
+  #    before: "^    end"
+  #    regexp: '^(\s+)[0-9]+$'
+  #    replace: '\120'
+  - name: "Increase DynFlow's pool_size attribute"
+    shell: |
+      f="/opt/theforeman/tfm/root/usr/share/gems/gems/dynflow-{{ dynflow_version.stdout_lines|first }}/lib/dynflow/config.rb"
+      no=$( grep -n -A 1 '^    config_attr :pool_size, Fixnum do$' "$f" | tail -n 1 | cut -d '-' -f 1 )
+      sed -i "${no}s/[0-9]\+/20/" $f
+...
