@@ -2,6 +2,8 @@
 - hosts: capsules
   remote_user: root
   roles:
+    - smart_proxy_dynflow_core-max-open-files
     - smart_proxy_dynflow_core-change-sqlite-storage
     #- smart_proxy_dynflow_core-bz1416542c36
+    - smart_proxy_dynflow_core-pool_size
     - common

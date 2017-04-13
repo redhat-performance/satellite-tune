@@ -2,5 +2,7 @@
 - hosts: all
   remote_user: root
   roles:
-    - qpidd-session-max-unacked
+    - qpidd-max-open-files
+    - qpidd-fs-aio-max-nr
     - common
+...
