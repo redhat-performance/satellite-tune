@@ -5,19 +5,44 @@
     stat: 
       path: /root/tune-backup
     register: backup_found
-  #Create a backup location if no backup is there
-  - name: "Create a backup location if no backup dir was found"
-    file:
-      path: /root/tune-backup
-      state: directory
-    when: backup_found.exists == False or backup_found is not defined
-  #Backup configuration before applying tunings
-  - name: "Backup configuration before applying tunings"
+  #Backup httpd
+  - name: "Backup httpd service"
     command:
-      cp -r "{{ item }}" "/root/tune-backup"
+      cp -r "{{ item }}" "/root/tune-backup/httpd"
     with_items:
-      - "/etc/httpd/conf"
-      - "/etc/httpd/conf.d"
-      - "/etc/httpd/conf.modules.d"
-      - "/etc/puppet"
-...
+      - "/etc/security/limits.d/99-httpd-nofile.conf"
+      - "/etc/systemd/system/httpd.service.d"
+  #Backup Passenger
+  - name: "Backup Passenger"
+    command:
+      cp -r "{{ item }}" "/root/tune-backup/passenger"
+    with_items:
+      - "/etc/httpd/conf.d/05-foreman-ssl.conf"
+      - "/etc/httpd/conf.d/25-puppet.conf"
+      - "/etc/httpd/conf.d/passenger.conf"
+  #Backup PgSQL
+  - name: "Backup PostgresSQL"
+    command:
+      cp -r "/var/lib/pgsql/data/postgresql.conf" "/root/tune-backup/pgsql"
+  #Backup Qdrouter
+  - name: "Backup qdrouterd"
+    command:
+      cp -r "{{ item }}/etc/systemd/system/qdrouterd.service.d" "/root/tune-backup/qdrouterd"
+    with_items:
+      - "/etc/systemd/system/qdrouterd.service.d"      
+  #Backup QPIDD
+  - name: "Backup QPIDD"
+    command:
+      cp -r "{{ item }}" "/root/tune-backup/qpidd"
+    with_items:
+      - "/etc/sysctl.d/50-qpidd.conf"
+      - "/etc/systemd/system/qpidd.service.d"
+      - "/etc/qpid/qpidd.conf"
+  #Backup DynFlow
+  - name: "Backup DynFlow"
+    command:
+      cp -r "{{ item }}" "/root/tune-backup/dynflow"
+    with_items:
+      - "/etc/smart_proxy_dynflow_core/settings.yml"
+      - "/etc/systemd/system/smart_proxy_dynflow_core.service.d"
+ 
