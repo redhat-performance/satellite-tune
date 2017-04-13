@@ -2,6 +2,7 @@
 - hosts: all
   remote_user: root
   roles:
+    - pretune
     - qdrouterd-max-open-files
     - common
 ...

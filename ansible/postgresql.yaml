@@ -2,6 +2,7 @@
 - hosts: all
   remote_user: root
   roles:
+    - pretune
     - pgsql-max-connections
     - pgsql-shared-buffers
     - pgsql-work-mem
