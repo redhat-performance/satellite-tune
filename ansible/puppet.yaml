@@ -2,5 +2,6 @@
 - hosts: all
   remote_user: root
   roles:
+    - pretune
     - passenger-puppet
     - common
