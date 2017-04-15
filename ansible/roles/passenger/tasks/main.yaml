@@ -1,12 +1,24 @@
 ---
 # Configure on RHEL7
-- name: "Tune passenger Globally"
-  blockinfile:
-    dest: /etc/httpd/conf.d/passenger.conf
-    insertafter: PassengerRuby
-    marker: "   #{mark} ANSIBLE MANAGED BLOCK"
-    block: |4
-           PassengerMaxPoolSize {{ ( ansible_processor_vcpus * 1.5 )|round|int }}
-           PassengerMaxRequestQueueSize 400
-           PassengerStatThrottleRate 120    
+- name: "Tune Passenger Max Pool Size"
+  lineinfile:
+     dest: /etc/httpd/conf.d/passenger.conf
+     insertafter: PassengerRuby
+     regexp: "PassengerMaxPoolSize"
+     line: "PassengerMaxPoolSize {{ ( ansible_processor_vcpus * PassengerMaxPoolSizeFactor )|round|int }}"
+     state: present
+- name: "Tune Passenger Max Request Queue Size"
+  lineinfile:
+     dest: /etc/httpd/conf.d/passenger.conf
+     insertafter: PassengerRuby
+     regexp: "PassengerMaxRequestQueueSize"
+     line: "PassengerMaxRequestQueueSize {{ PassengerMaxRequestQueueSize }}"
+     state: present
+- name: "Tune Passenger Stat Throttle Rate"
+  lineinfile:
+     dest: /etc/httpd/conf.d/passenger.conf
+     insertafter: PassengerRuby
+     regexp: "PassengerStatThrottleRate"
+     line: "PassengerStatThrottleRate {{ PassengerStatThrottleRate }}" 
+     state: present
 ...
