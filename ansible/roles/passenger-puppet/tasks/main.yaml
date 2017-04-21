@@ -1,14 +1,38 @@
 ---
 # Configure on RHEL7
-- name: "Tune passenger for puppet Globally"
-  blockinfile:
-    dest: /etc/httpd/conf.d/25-puppet.conf
-    insertafter: SSLOptions
-    marker: "   #{mark} ANSIBLE MANAGED BLOCK"
-    block: |4
-           PassengerMinInstances 6
-           PassengerStartTimeout 500
-           PassengerMaxPreloaderIdleTime 0
-           PassengerMaxRequests 10000
-           PassengerPreStart https://satellite6.example.com:8140 
+- name: "Tune Passenger Puppet MinInstances"
+  lineinfile:
+     dest: /etc/httpd/conf.d/25-puppet.conf
+     insertafter: SSLOptions
+     regexp: "PassengerMinInstances"
+     line: "PassengerMinInstances {{ PassengerPuppetMinInstances }}"
+     state: present
+- name: "Tune Passenger Puppet Start Timeout"
+  lineinfile:
+     dest: /etc/httpd/conf.d/25-puppet.conf
+     insertafter: SSLOptions
+     regexp: "PassengerStartTimeout"
+     line: "PassengerStartTimeout {{ PassengerPuppetStartTimeout }}"
+     state: present
+- name: "Tune Passenger Puppet Max Preloader Idle Time"
+  lineinfile:
+     dest: /etc/httpd/conf.d/25-puppet.conf
+     insertafter: SSLOptions
+     regexp: "PassengerMaxPreloaderIdleTime"
+     line: "PassengerMaxPreloaderIdleTime {{ PassengerPuppetMaxPreloaderIdleTime }}"
+     state: present
+- name: "Tune Passenger Puppet Max Requests"
+  lineinfile:
+     dest: /etc/httpd/conf.d/25-puppet.conf
+     insertafter: SSLOptions
+     regexp: "PassengerMaxRequests"
+     line: "PassengerMaxRequests {{ PassengerPuppetMaxRequests }}"
+     state: present
+- name: "Tune Passenger Puppet PreStart"
+  lineinfile:
+     dest: /etc/httpd/conf.d/25-puppet.conf
+     insertafter: SSLOptions
+     regexp: "PassengerPreStart"
+     line: "PassengerPreStart {{ PassengerPuppetPreStart }}"
+     state: present
 ...
