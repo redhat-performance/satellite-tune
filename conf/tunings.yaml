@@ -2,7 +2,7 @@
 # Passenger Foreman Tunings 
 PassengerForemanMaxRequestQueueSize: 400
 PassengerForemanStatThrottleRate: 120
-PassengerForemanMinInstances 6
+PassengerForemanMinInstances: 6
 
 # Passenger Puppet Tunings
 PassengerPuppetMinInstances: 6
@@ -14,7 +14,7 @@ PassengerPuppetPreStart: https://satellite6.example.com:8140
 # Passenger Config
 PassengerMaxPoolSizeFactor: 1.5
 PassengerMaxRequestQueueSize: 400
-PassengerStatThrottleRate 120
+PassengerStatThrottleRate: 120
 
 # PostgreSQL settings
 PgsqlMaxConnections: 400
