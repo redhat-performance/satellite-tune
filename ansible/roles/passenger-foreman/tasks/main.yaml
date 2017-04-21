@@ -4,18 +4,21 @@
   lineinfile:
      dest: /etc/httpd/conf.d/05-foreman-ssl.conf
      regexp: "PassengerMaxRequestQueueSize"
+     insertafter: PassengerRuby
      line: "PassengerMaxRequestQueueSize {{ PassengerForemanMaxRequestQueueSize  }}"
      state: present
 - name: "Tune Passenger Stat Throttle Rate"
   lineinfile:
      dest: /etc/httpd/conf.d/05-foreman-ssl.conf
      regexp: "PassengerStatThrottleRate"
-     line: "PassengerStateThrottleRate {{ PassengerForemanStatThrottleRate }}"
+     insertafter: PassengerRuby
+     line: "PassengerStatThrottleRate {{ PassengerForemanStatThrottleRate }}"
      state: present
 - name: "Tune Passenger Foreman Min Instances"
   lineinfile:
      dest: /etc/httpd/conf.d/05-foreman-ssl.conf
      regexp: "PassengerMinInstances"
-     lineinfile: "PassengerMinInstances {{ PassengerForemanMinInstances }}"
+     insertafter: PassengerRuby
+     line: "PassengerMinInstances {{ PassengerForemanMinInstances }}"
      state: present
 ...
