@@ -4,7 +4,7 @@
   - name: "Setup postgres max_connections"
     lineinfile:
       dest: /var/lib/pgsql/data/postgresql.conf
-      line: max_connections = 400
+      line: "max_connections = {{ PgsqlMaxConnections }}"
       regexp: "^max_connections"
       state: present
     #when: "ansible_distribution == 'RedHat' and {{ ansible_distribution_version | version_compare('7.0', '>=') }} == 'true'"
