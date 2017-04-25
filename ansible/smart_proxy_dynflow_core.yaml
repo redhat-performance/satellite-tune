@@ -1,5 +1,7 @@
 ---
 - hosts: capsules
+  vars_files:
+    - ../conf/tunings.yaml
   remote_user: root
   roles:
     - pretune

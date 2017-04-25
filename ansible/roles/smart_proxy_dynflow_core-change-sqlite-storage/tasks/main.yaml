@@ -4,5 +4,5 @@
     lineinfile:
       dest: /etc/smart_proxy_dynflow_core/settings.yml
       regexp: ":database:"
-      line: ':database: ""'
+      line: ':database: {{ DynflowDatabaseSource }}'
 ...
