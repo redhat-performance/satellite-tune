@@ -4,7 +4,7 @@
   - name: "Set postgresql work_mem"
     lineinfile:
       dest: /var/lib/pgsql/data/postgresql.conf
-      line: work_mem = 4MB
+      line: "work_mem = {{ PgsqlWorkMem }}"
       regexp: "^work_mem"
       state: present
     #when: "ansible_distribution == 'Red Hat Enterprise Linux' and ansible_distribution_version == '7'"
