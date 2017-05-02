@@ -1,0 +1,8 @@
+---
+#Setup custom hieriarchies
+- name: Enable restoration after upgrades
+  template:
+     src=custom-hiera.yaml.j2
+     dest=/etc/foreman-installer/custom-hiera.yaml
+  become: true
+...

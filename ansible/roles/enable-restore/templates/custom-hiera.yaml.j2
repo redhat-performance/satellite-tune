@@ -1,0 +1,18 @@
+#Satellite 6 Custom Hieriarchies
+#Currently being used to enable the restoration of settings during upgrades
+
+#Passenger Tunings
+apache::mod::passenger::passenger_max_pool_size: {{ ( ansible_processor_vcpus * PassengerMaxPoolSizeFactor )|round|int }}
+{% if PassengerMaxInstancesPerApp is defined %}
+apache::mod::passenger::passenger_max_instances_per_app: {{ PassengerMaxInstancesPerApp }}
+{% endif %}
+apache::mod::passenger::passenger_max_request_queue_size: {{ PassengerMaxRequestQueueSize }}
+apache::mod::passenger::passenger_stat_throttle_rate: {{ PassengerStatThrottleRate }}
+
+#Pulp Settings
+{% if PulpNumWorkers is defined %}
+pulp::num_workers: {{ PulpNumWorkers }}
+{% endif %}
+{% if PulpMaxTasksPerChild is defined %}
+pulp::max_tasks_per_child: {{ PulpMaxTasksPerChild }}
+{% endif %}
