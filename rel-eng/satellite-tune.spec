@@ -1,5 +1,5 @@
 Name:          satellite-tune
-Version:       master
+Version:       1.1
 Release:       1%{?dist}
 Summary:       Various tunings for Red Hat Satellite 6
 License:       GPLv3
