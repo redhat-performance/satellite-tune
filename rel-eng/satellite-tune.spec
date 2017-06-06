@@ -26,15 +26,15 @@ Ansible playbooks to tune various aspects of Red Hat Satellite 6 or its Capsule
 rm -rf %{buildroot}
 pushd %{name}-%{version}
 rm -rf rel-eng
-mkdir -p %{buildroot}/usr/%{name}
-cp README.md %{buildroot}/usr/%{name}
-cp LICENSE %{buildroot}/usr/%{name}
-cp -r adhoc-scripts %{buildroot}/usr/%{name}
-cp -r ansible %{buildroot}/usr/%{name}
-cp -r docs %{buildroot}/usr/%{name}
-mkdir %{buildroot}/usr/%{name}/conf
-cp conf/hosts.ini.sample %{buildroot}/usr/%{name}/conf
-cp conf/tunings.yaml %{buildroot}/usr/%{name}/conf
+mkdir -p %{buildroot}/%{_datadir}/%{name}
+cp README.md %{buildroot}/%{_datadir}/%{name}
+cp LICENSE %{buildroot}/%{_datadir}/%{name}
+cp -r adhoc-scripts %{buildroot}/%{_datadir}/%{name}
+cp -r ansible %{buildroot}/%{_datadir}/%{name}
+cp -r docs %{buildroot}/%{_datadir}/%{name}
+mkdir %{buildroot}/%{_datadir}/%{name}/conf
+cp conf/hosts.ini.sample %{buildroot}/%{_datadir}/%{name}/conf
+cp conf/tunings.yaml %{buildroot}/%{_datadir}/%{name}/conf
 popd
 
 
@@ -44,7 +44,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-/usr/%{name}
+/%{_datadir}/%{name}
 
 
 %changelog
