@@ -20,6 +20,8 @@ PassengerStatThrottleRate: 120
 PgsqlMaxConnections: 400
 PgsqlSharedBuffers: 512MB
 PgsqlWorkMem: 4MB
+PgsqlCheckpointSegments: 32
+PgsqlCheckpointCompletiontarget: 0.9
 
 # Qpid Tunings
 QpiddSessionMaxUnacked: 100

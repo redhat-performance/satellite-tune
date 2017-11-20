@@ -1,0 +1,14 @@
+---
+  - name: Set postgres checkpoint segments
+    lineinfile:
+      dest: /var/lib/pgsql/data/postgresql.conf
+      line: "checkpoint_segments = {{ PgsqlCheckpointSegments }}"
+      regexp: "^checkpoint_segments"
+      state: present
+  - name: Increase the checkpoint completion target
+    lineinfile:
+      dest: /var/lib/pgsql/data/postgresql.conf
+      line: "checkpoint_completion_target = {{ PgsqlCheckpointCompletionTarget }}"
+      regexp: "^checkpoint_completion_target"
+      state: present
+...

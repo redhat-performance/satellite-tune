@@ -8,4 +8,5 @@
     - pgsql-max-connections
     - pgsql-shared-buffers
     - pgsql-work-mem
+    - pgsql-checkpoints
     - common
