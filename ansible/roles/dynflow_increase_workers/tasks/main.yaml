@@ -1,0 +1,11 @@
+---
+  #Increase the number of Dynflow workers
+  - name: Increase the number of Dynflow workers
+    template:
+        src: foreman_tasks_workers_bump.rb.j2
+        dest: /usr/share/foreman/config/initializers/foreman_tasks_workers_bump.rb
+  - name: Restart the foreman tasks service
+    service:
+        name: foreman-tasks
+        state: restarted
+...

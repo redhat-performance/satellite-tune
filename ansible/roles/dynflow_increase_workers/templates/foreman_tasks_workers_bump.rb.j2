@@ -1,0 +1,4 @@
+workers_count = 10
+Rails.logger.info("Bumping up the number of Dynflow workers workers_count to #{workers_count}")
+ForemanTasks.dynflow.config.pool_size = workers_count
+ForemanTasks.dynflow.config.db_pool_size = workers_count + 5
