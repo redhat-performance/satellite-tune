@@ -17,7 +17,7 @@ PassengerMaxRequestQueueSize: 400
 PassengerStatThrottleRate: 120
 
 # PostgreSQL settings
-PgsqlMaxConnections: 400
+PgsqlMaxConnections: 500
 PgsqlSharedBuffers: 512MB
 PgsqlWorkMem: 4MB
 PgsqlCheckpointSegments: 32
